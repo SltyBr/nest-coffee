@@ -19,6 +19,13 @@ export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
 
   @Get('flavors')
+  findAllFlavors(@Query() paginationQuery) {
+    const { limit, offset } = paginationQuery;
+
+    return this.coffeesService.findAll();
+  }
+
+  @Get('')
   findAll(@Query() paginationQuery) {
     const { limit, offset } = paginationQuery;
 
@@ -33,7 +40,7 @@ export class CoffeesController {
   @Post()
   @HttpCode(HttpStatus.GONE)
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
-    return this.coffeesService.createCoffee(createCoffeeDto);
+    return this.coffeesService.create(createCoffeeDto);
   }
 
   @Patch(':id')
