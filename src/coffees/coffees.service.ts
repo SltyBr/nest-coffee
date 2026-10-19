@@ -22,9 +22,7 @@ export class CoffeesService {
     private readonly coffeesConfiguration: config.ConfigType<
       typeof coffeesConfig
     >,
-  ) {
-    console.log(this.coffeesConfiguration);
-  }
+  ) {}
 
   findAll({ limit, offset }: PaginationQueryDto) {
     return this.coffeeRepository.find({
