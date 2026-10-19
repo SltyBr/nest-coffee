@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
 import appConfig from './config/app.config';
+import { APP_PIPE } from '@nestjs/core';
+import { ApiKeyGuard } from './common/guards/api-key.guard';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -29,8 +32,16 @@ import appConfig from './config/app.config';
         synchronize: true,
       }),
     }),
+    CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+    ApiKeyGuard,
+  ],
 })
 export class AppModule {}

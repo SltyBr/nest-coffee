@@ -14,6 +14,7 @@ import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -26,7 +27,8 @@ export class CoffeesController {
   //   return this.coffeesService.findAll();
   // }
 
-  @Get('')
+  @Get()
+  @Public()
   findAll(@Query() paginationQuery: PaginationQueryDto) {
     return this.coffeesService.findAll(paginationQuery);
   }
