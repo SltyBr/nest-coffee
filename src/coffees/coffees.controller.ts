@@ -16,6 +16,7 @@ import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { PaginationQueryDto } from '../common/dto/pagination-query.dto';
 import { Public } from '../common/decorators/public.decorator';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
 
 @Controller('coffees')
 export class CoffeesController {
@@ -30,8 +31,11 @@ export class CoffeesController {
 
   @Get()
   @Public()
-  async findAll(@Query() paginationQuery: PaginationQueryDto) {
-    await new Promise((res) => setTimeout(() => res, 5000));
+  async findAll(
+    @Protocol('https') protocol: string,
+    @Query() paginationQuery: PaginationQueryDto,
+  ) {
+    await new Promise((res) => setTimeout(() => res, 1000));
     return this.coffeesService.findAll(paginationQuery);
   }
 
